@@ -24,3 +24,7 @@ while(($lineData = fgetcsv($handle)) !== FALSE)
 }
 
 fclose($handle);
+
+if (count($identifier->getEntries())) {
+    echo $identifier->getResults();
+}

@@ -43,12 +43,24 @@ class PersonalIdentifier
         $parsed_data = $this->parse($entry_data);
     
         $person = new Person($parsed_data);
-        $this->entries[] = $person;
+        $this->entries[] = $person->jsonSerialize();
     
         $this->line_counter++;
         return "";
     }
 
+    public function getResults()
+    {
+        $results = [
+            'entries' => $this->getEntries(),
+            'errors'  => $this->getErrors(),
+        ];
+        
+        
+        $json =  json_encode($results);
+        
+        return EntryDataTransformer::jsonPrint($json);
+    }
 
     /**
      * @param mixed $validator
@@ -82,10 +94,22 @@ class PersonalIdentifier
         
         return $transformed_data;
     }
-
-
-
-
-
-
+    
+    /**
+     * @return mixed
+     */
+    public function getEntries()
+    {
+        return $this->entries;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+    
+    
 }

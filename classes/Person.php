@@ -10,12 +10,14 @@
 
 namespace Classes;
 
+use JsonSerializable;
+
 /**
  * Class Person
  *
  * @package Classes
  */
-class Person
+class Person implements JsonSerializable
 {
     protected $color;
     protected $first_name;
@@ -147,4 +149,8 @@ class Person
         return $this->zip_code;
     }
     
+    function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 }
