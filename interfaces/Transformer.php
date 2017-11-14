@@ -11,5 +11,5 @@ namespace Interfaces;
 
 interface Transformer
 {
-    public static function transform($data);
+    public function transform($data);
 }

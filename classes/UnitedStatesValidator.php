@@ -10,14 +10,15 @@
 
 namespace Classes;
 
-use Interfaces\Validator;
+use Interfaces\DataValidator;
+
 
 /**
  * Class UnitedStatesValidator
  *
  * @package Classes
  */
-class UnitedStatesValidator implements Validator
+class UnitedStatesValidator implements DataValidator
 
 {
     

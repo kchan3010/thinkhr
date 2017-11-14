@@ -3,6 +3,7 @@
 include_once "autoload.php";
 
 
+use Classes\EntryDataTransformer;
 use Classes\PersonalIdentifier;
 use Classes\UnitedStatesValidator;
 
@@ -12,7 +13,8 @@ if (count($argv) == 0) {
 }
 
 $usa_validator = new UnitedStatesValidator();
-$identifier = new PersonalIdentifier($usa_validator);
+$transformer = new EntryDataTransformer();
+$identifier = new PersonalIdentifier($usa_validator, $transformer);
 
 $handle = fopen($argv[0], 'r');
 while(($lineData = fgetcsv($handle)) !== FALSE)

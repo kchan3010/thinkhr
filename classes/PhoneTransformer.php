@@ -14,7 +14,7 @@ use Interfaces\Transformer;
 class PhoneTransformer implements Transformer
 {
 
-    public static function transform($phone)
+    public function transform($phone)
     {
         if (strpos($phone, "(")) {
             $phone = str_replace("(", "", $phone);

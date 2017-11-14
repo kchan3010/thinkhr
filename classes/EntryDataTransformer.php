@@ -18,7 +18,7 @@ class EntryDataTransformer implements Transformer
     const SPLIT_NAME_PARTS_COUNT = 5;
 
 
-    public static function transform($entry_data)
+    public function transform($entry_data)
     {
         if(empty($entry_data)) {
             return [];
@@ -34,19 +34,19 @@ class EntryDataTransformer implements Transformer
             list($first_name, $last_name) = explode(" ", $entry_data[0]);
             $color    = $entry_data[1];
             $zip_code = $entry_data[2];
-            $phone    = PhoneTransformer::transform($entry_data[3]);
+            $phone    = $this->transformPhone($entry_data[3]);
         } elseif (count($entry_data) == self::SPLIT_NAME_PARTS_COUNT) {
             if (is_numeric($entry_data[2])) {
                 $first_name = $entry_data[0];
                 $last_name  = $entry_data[1];
                 $zip_code   = $entry_data[2];
-                $phone      = PhoneTransformer::transform($entry_data[3]);
+                $phone      = $this->transformPhone($entry_data[3]);
                 $color      = $entry_data[4];
 
             } else {
                 $last_name  = $entry_data[0];
                 $first_name = $entry_data[1];
-                $phone      = PhoneTransformer::transform($entry_data[2]);
+                $phone      = $this->transformPhone($entry_data[2]);
                 $color      = $entry_data[3];
                 $zip_code   = $entry_data[4];
             }
@@ -63,7 +63,7 @@ class EntryDataTransformer implements Transformer
         return $output;
     }
     
-    public static function jsonPrint($json)
+    public function jsonPrint($json)
     {
         $result          = '';
         $level           = 0;
@@ -124,5 +124,24 @@ class EntryDataTransformer implements Transformer
         
         return $result;
     }
+    
+    private function transformPhone($phone)
+    {
+        if (strpos($phone, "(")) {
+            $phone = str_replace("(", "", $phone);
+        }
+    
+        if (strpos($phone, ")")) {
+            $phone = str_replace(")", "", $phone);
+        }
+        if (strpos($phone, "-")) {
+            $phone = str_replace("-", " ", $phone);
+        }
+    
+        return $phone;
+    
+    }
+    
+    
     
 }
