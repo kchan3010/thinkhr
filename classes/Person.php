@@ -17,7 +17,7 @@ namespace Classes;
  */
 class Person
 {
-    protected $favorite_color;
+    protected $color;
     protected $first_name;
     protected $last_name;
     protected $phone;
@@ -41,17 +41,20 @@ class Person
             $this->setZipCode($personal_data['zip_code']);
         }
         
+        if (isset($personal_data['color'])) {
+            $this->setColor($personal_data['color']);
+        }
         
     }
     
     /**
-     * @param mixed $favorite_color
+     * @param mixed $color
      *
      * @return Person
      */
-    public function setFavoriteColor($favorite_color)
+    public function setColor($color)
     {
-        $this->favorite_color = $favorite_color;
+        $this->color = $color;
         
         return $this;
     }
@@ -59,9 +62,9 @@ class Person
     /**
      * @return mixed
      */
-    public function getFavoriteColor()
+    public function getColor()
     {
-        return $this->favorite_color;
+        return $this->color;
     }
     
     /**

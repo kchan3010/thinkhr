@@ -34,12 +34,17 @@ class PersonalIdentifier
 
     public function process($entry_data)
     {
-        if (empty($entry_data)) {
-            throw new Exception("There are no data to process");
+        if (count($entry_data) < EntryDataTransformer::FULL_NAME_PARTS_COUNT) {
+            $this->errors[] = $this->line_counter;
+            $this->line_counter++;
+            return "";
         }
 
-        $this->parse($entry_data);
-
+        $parsed_data = $this->parse($entry_data);
+    
+        $person = new Person($parsed_data);
+        $this->entries[] = $person;
+    
         $this->line_counter++;
         return "";
     }
@@ -70,15 +75,12 @@ class PersonalIdentifier
     {
         $transformed_data = EntryDataTransformer::transform($entry_data);
         
-        if (!$this->getValidator()->isValidatePhone($transformed_data['phone'])) {
+        if (!$this->getValidator()->isValidPhone($transformed_data['phone'])) {
             $this->errors[] = $this->line_counter;
-            return;
+            return false;
         }
         
-        $person = new Person();
-
-
-
+        return $transformed_data;
     }
 
 

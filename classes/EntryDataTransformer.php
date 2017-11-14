@@ -35,7 +35,7 @@ class EntryDataTransformer implements Transformer
             $color    = $entry_data[1];
             $zip_code = $entry_data[2];
             $phone    = PhoneTransformer::transform($entry_data[3]);
-        } elseif (count($entry_data) == self::FULL_NAME_PARTS_COUNT) {
+        } elseif (count($entry_data) == self::SPLIT_NAME_PARTS_COUNT) {
             if (is_numeric($entry_data[2])) {
                 $first_name = $entry_data[0];
                 $last_name  = $entry_data[1];
@@ -55,10 +55,11 @@ class EntryDataTransformer implements Transformer
         $output = [
             'first_name' => $first_name,
             'last_name'  => $last_name,
-            'phone'      => $phone,
-            'zip_code'   => $zip_code,
-            'color'      => $color,
+            'phone'      => trim($phone),
+            'zip_code'   => trim($zip_code),
+            'color'      => trim($color),
         ];
 
+        return $output;
     }
 }

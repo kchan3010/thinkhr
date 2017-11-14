@@ -16,14 +16,14 @@ class PhoneTransformer implements Transformer
 
     public static function transform($phone)
     {
-        if (strpos("(", $phone)) {
+        if (strpos($phone, "(")) {
             $phone = str_replace("(", "", $phone);
         }
 
-        if (strpos(")", $phone)) {
+        if (strpos($phone, ")")) {
             $phone = str_replace(")", "", $phone);
         }
-        if (strpos("-", $phone)) {
+        if (strpos($phone, "-")) {
             $phone = str_replace("-", " ", $phone);
         }
 

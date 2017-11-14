@@ -16,6 +16,6 @@ namespace Interfaces;
 
 interface Validator
 {
-    public function isValidatePhone($phone);
+    public function isValidPhone($phone);
     
 }
