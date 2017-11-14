@@ -26,8 +26,4 @@ class UnitedStatesValidator implements Validator
         // TODO: Implement validatePhone() method.
     }
     
-    public function isValidateZip($zip)
-    {
-        // TODO: Implement validateZip() method.
-    }
 }

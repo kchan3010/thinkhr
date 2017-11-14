@@ -21,10 +21,26 @@ class Person
     protected $first_name;
     protected $last_name;
     protected $phone;
-    protected $zip;
+    protected $zip_code;
     
-    public function __construct($personal_data)
+    public function __construct(array $personal_data)
     {
+        if (isset($personal_data['first_name'])) {
+            $this->setFirstName($personal_data['first_name']);
+        }
+        
+        if (isset($personal_data['last_name'])) {
+            $this->setLastName($personal_data['last_name']);
+        }
+        
+        if (isset($personal_data['phone'])) {
+            $this->setPhone($personal_data['phone']);
+        }
+        
+        if (isset($personal_data['zip_code'])) {
+            $this->setZipCode($personal_data['zip_code']);
+        }
+        
         
     }
     
@@ -113,9 +129,9 @@ class Person
      *
      * @return Person
      */
-    public function setZip($zip)
+    public function setZipCode($zip_code)
     {
-        $this->zip = $zip;
+        $this->zip_code = $zip_code;
         
         return $this;
     }
@@ -123,9 +139,9 @@ class Person
     /**
      * @return mixed
      */
-    public function getZip()
+    public function getZipCode()
     {
-        return $this->zip;
+        return $this->zip_code;
     }
     
 }

@@ -21,9 +21,6 @@ use Interfaces\Validator;
 class PersonalIdentifier
 {
 
-    const FULL_NAME_PARTS_COUNT = 4;
-    const SPLIT_NAME_PARTS_COUNT = 5;
-
     protected $parser;
     protected $validator;
     protected $entries;
@@ -71,18 +68,17 @@ class PersonalIdentifier
      */
     private function parse($entry_data)
     {
-        if (count($entry_data) == self::FULL_NAME_PARTS_COUNT) {
-            if (!$this->getValidator()->isValidatePhone($entry_data[4])) {
-                $this->errors[] = $this->line_counter;
-                return;
-            }
-
-            $phone = PhoneTransformer::transform($entry_data[4]);
-            list($first_name, $last_name) = explode(" ", $entry_data[0]);
-            $color = $entry_data[1];
-            $zipcode = $entry_data[2];
-
+        $transformed_data = EntryDataTransformer::transform($entry_data);
+        
+        if (!$this->getValidator()->isValidatePhone($transformed_data['phone'])) {
+            $this->errors[] = $this->line_counter;
+            return;
         }
+        
+        $person = new Person();
+
+
+
     }
 
 
