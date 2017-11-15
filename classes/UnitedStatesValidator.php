@@ -38,4 +38,14 @@ class UnitedStatesValidator implements DataValidator
         return $ret_val;
     }
     
+    public function isValidZipCode($zip_code)
+    {
+        $ret_val = false;
+    
+        if (preg_match("/^\d{5}(?:[-\s]\d{4})?$/", $zip_code)) {
+            $ret_val = true;
+        }
+        
+        return $ret_val;
+    }
 }

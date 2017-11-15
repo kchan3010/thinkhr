@@ -18,4 +18,6 @@ interface DataValidator
 {
     public function isValidPhone($phone);
     
+    public function isValidZipCode($zip_code);
+    
 }
