@@ -1,11 +1,15 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-include_once "autoload.php";
+require __DIR__ . '/vendor/autoload.php';
 
 
-use Classes\EntryDataTransformer;
-use Classes\PersonalIdentifier;
-use Classes\UnitedStatesValidator;
+use thinkHr\Classes\EntryDataTransformer;
+use thinkHr\Classes\PersonalIdentifier;
+use thinkHr\Classes\UnitedStatesValidator;
+
 
 array_shift($argv);
 if (count($argv) == 0) {
