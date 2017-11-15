@@ -25,8 +25,7 @@ while(($lineData = fgetcsv($handle)) !== FALSE)
     }
 }
 
-fclose($handle);
+$filename = $argv[1];
+$identifier->getResults($filename);
 
-if (count($identifier->getEntries())) {
-    echo $identifier->getResults();
-}
+fclose($handle);

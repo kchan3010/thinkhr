@@ -66,10 +66,15 @@ class PersonalIdentifier
      */
     public function getResults($filename='output.txt')
     {
-        $results = [
-            'entries' => $this->getEntries(),
-            'errors'  => $this->getErrors(),
-        ];
+        $results = [];
+        
+        if (!empty($this->getEntries())) {
+            $results['entries'] = $this->sortEntries();
+        }
+        
+        if (!empty($this->getErrors())) {
+            $results['errors'] = $this->getErrors();
+        }
         
         $data = $this->getTransformer()->prepareJson($results);
         
@@ -151,5 +156,17 @@ class PersonalIdentifier
         return $transformed_data;
     }
     
+    private function sortEntries()
+    {
+        if (empty($this->getEntries())) {
+            return [];
+        }
+        
+        foreach($this->entries as $key=>$entry) {
+            $first_name[$key] = $entry['first_name'];
+            $last_name[$key]  = $entry['last_name'];
+        }
     
+        array_multisort($first_name, SORT_ASC, $last_name, SORT_ASC, $this->entries);
+    }
 }
