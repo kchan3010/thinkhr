@@ -41,7 +41,9 @@ class PersonalIdentifier
      */
     public function process($entry_data)
     {
-        if (count($entry_data) < EntryDataTransformer::FULL_NAME_PARTS_COUNT) {
+        if (count($entry_data) < EntryDataTransformer::FULL_NAME_PARTS_COUNT ||
+            count($entry_data) > EntryDataTransformer::SPLIT_NAME_PARTS_COUNT
+        ) {
             $this->errors[] = $this->line_counter;
             $this->line_counter++;
             return false;
@@ -69,7 +71,8 @@ class PersonalIdentifier
         $results = [];
         
         if (!empty($this->getEntries())) {
-            $results['entries'] = $this->sortEntries();
+            $this->sortEntries();
+            $results['entries'] = $this->getEntries();
         }
         
         if (!empty($this->getErrors())) {
@@ -148,6 +151,7 @@ class PersonalIdentifier
     {
         $transformed_data = $this->getTransformer()->transform($entry_data);
         
+        //let's normalize the data first and then validate phone number
         if (!$this->getValidator()->isValidPhone($transformed_data['phone'])) {
             $this->errors[]   = $this->line_counter;
             $transformed_data = [];

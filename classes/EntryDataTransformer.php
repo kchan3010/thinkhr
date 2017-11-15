@@ -13,9 +13,10 @@ use Interfaces\Transformer;
 
 class EntryDataTransformer implements Transformer
 {
-
-    const FULL_NAME_PARTS_COUNT = 4;
+    
+    const FULL_NAME_PARTS_COUNT  = 4;
     const SPLIT_NAME_PARTS_COUNT = 5;
+    const VALID_PHONE_STR_LEN    = 12; //account for two spaces
 
 
     public function transform($entry_data)
@@ -53,8 +54,8 @@ class EntryDataTransformer implements Transformer
         }
     
         $output = [
-            'first_name' => $first_name,
-            'last_name'  => $last_name,
+            'first_name' => trim($first_name),
+            'last_name'  => trim($last_name),
             'phone'      => trim($phone),
             'zip_code'   => trim($zip_code),
             'color'      => trim($color),
@@ -82,19 +83,31 @@ class EntryDataTransformer implements Transformer
     
     private function transformPhone($phone)
     {
-        if (strpos($phone, "(")) {
+        $phone = trim($phone);
+        
+        if (strpos($phone, "(") >= 0) {
             $phone = str_replace("(", "", $phone);
         }
     
         if (strpos($phone, ")")) {
             $phone = str_replace(")", "", $phone);
         }
+        
         if (strpos($phone, "-")) {
             $phone = str_replace("-", " ", $phone);
         }
+        
+        //if we want to transform phone numbers w/o spaces or dashes
+        //commenting out for now
+//        if(strlen($phone) != self::VALID_PHONE_STR_LEN) {
+//            $area_code = substr($phone, 0, 3);
+//            $prefix    = substr($phone, 3, 3);
+//            $suffix    = substr($phone, 6);
+//
+//            $phone = $area_code . " " . $prefix . " " . $suffix;
+//        }
     
         return $phone;
-    
     }
     
     
